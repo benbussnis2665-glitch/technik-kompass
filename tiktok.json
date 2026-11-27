@@ -1,0 +1,32 @@
+[
+  {
+    "id": "v14",
+    "videos": [
+      "v10",
+      "v14"
+    ],
+    "title": "USB-C-Ladegerät fürs iPhone",
+    "group": "chargers",
+    "product": "Nano 3 30W",
+    "why": "Ein iPhone lädt mit mindestens 20 W schnell. Das Anker Nano 3 hat 30 W, kostet aber kaum mehr als ein 20-W-Netzteil und lädt auch ein iPad zügig. Klein, leicht, ein USB-C-Anschluss.",
+    "tip": "Du brauchst dazu ein Kabel von USB-C auf Lightning (bis iPhone 14) oder USB-C auf USB-C (ab iPhone 15)."
+  },
+  {
+    "id": "powerbank",
+    "videos": [],
+    "title": "Magnet-Powerbank (MagSafe) fürs iPhone",
+    "group": "powerbanks",
+    "product": "Iniu SnapGo Air",
+    "why": "Haftet magnetisch hinten am iPhone (ab iPhone 12) und lädt kabellos. 10.000 mAh reichen für etwa eine volle Ladung, und sie ist leicht.",
+    "tip": "Ältere iPhones wie das 13 Pro Max laden kabellos mit bis zu 15 W, das ist langsamer als per Kabel."
+  },
+  {
+    "id": "huelle",
+    "videos": [],
+    "title": "Schlanke Hülle mit MagSafe",
+    "group": "cases",
+    "product": "OtterBox Symmetry",
+    "why": "Dünn, mit eingebauten Magneten, damit MagSafe-Zubehör wie die Powerbank fest hält. Gut bewertet und günstig.",
+    "tip": "Beim Kauf genau dein iPhone-Modell auswählen."
+  }
+]

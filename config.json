@@ -1,0 +1,13 @@
+{
+  "site_name": "Technik Kompass",
+  "domain": "https://DEINE-DOMAIN.de",
+  "amazon_tag": "",
+  "impressum": {
+    "name": "[Vorname Nachname]",
+    "street": "[Straße Hausnummer]",
+    "city": "[PLZ Ort]",
+    "email": "[E-Mail-Adresse]",
+    "phone": ""
+  },
+  "updated": "27.11.2026"
+}

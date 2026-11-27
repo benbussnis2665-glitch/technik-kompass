@@ -1,0 +1,4 @@
+{
+  "_info": "Hier pro Gerät eine Amazon-ASIN oder einen fertigen Partner-Link eintragen. Schlüssel = Rangliste/Geräte-Kürzel, z. B. chargers/anker-nano-3-30w. Ohne Eintrag wird ein Amazon-Suchlink mit deinem Partner-Tag benutzt (nur wenn amazon_tag in config.json gesetzt ist).",
+  "chargers/anker-nano-3-30w": {"asin": ""}
+}
