@@ -98,7 +98,7 @@ def spinner(g, p, lazy=False, loop=False):
     if v["kind"] != "3d":
         return f'<img src="/assets/{v["img"]}" width="400" height="400" alt="Zeichnung {e(p["_full"])}">'
     ld = ' loading="lazy"' if lazy else ' fetchpriority="high"'
-    return (f'<div class="spin" data-sprite="/assets/{v["spin"]}" data-frames="{v["frames"]}"{" data-loop=\"1\"" if loop else ""} tabindex="0" role="img" '
+    return (f'<div class="spin" data-sprite="/assets/{v["spin"]}" data-frames="{v["frames"]}" data-cols="{v.get("cols", v["frames"])}"{" data-loop=\"1\"" if loop else ""} tabindex="0" role="img" '
             f'aria-label="3D-Modell {e(p["_full"])}, zum Drehen ziehen oder Pfeiltasten nutzen"><img src="/assets/{v["img"]}" width="640" height="800" alt=""{ld}></div>')
 
 DRAG = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12h16M8 8l-4 4 4 4M16 8l4 4-4 4"/></svg>'

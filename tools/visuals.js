@@ -1,12 +1,14 @@
 /* Erzeugt die Gerätebilder für die statische Seite aus der Original-Seite (src/original.html).
-   - Handys: 3D-Standbild (WebP) + Dreh-Sprite (WebP, 30 Bilder nebeneinander) aus dem eigenen WebGL-Renderer (TK3D)
+   - Handys: 3D-Standbild (WebP) + Dreh-Sprite (WebP, 60 Bilder im Raster 10×6, also 6° pro Bild) aus dem eigenen WebGL-Renderer (TK3D)
    - alle anderen Geräte: SVG-Zeichnung aus art()
    - Kategorien: Titel-Illustration aus TKArt (als WebP)
    Ausgabe: assets/gen/… und assets/gen/manifest.json (Schlüssel: Gruppen-ID + "|" + Gerätename).
    Aufruf: node tools/visuals.js   (braucht Playwright mit Chromium) */
 const {chromium}=require('playwright');const fs=require('fs');const path=require('path');const crypto=require('crypto');
 const ROOT=path.resolve(__dirname,'..');const OUT=path.join(ROOT,'assets/gen');
-const FR=30,SW=440,SH=550;           /* Dreh-Sprite: 30 Bilder à 440×550 */
+/* Dreh-Sprite: 60 Bilder à 400×500 im Raster (10 Spalten × 6 Zeilen = 4000×3000 px).
+   Raster statt einer langen Reihe, weil iOS-Safari sehr breite Bilder schlecht verarbeitet. */
+const FR=60,COLS=10,SW=400,SH=500;
 const slug=s=>{s=s.toLowerCase();for(const [a,b] of [["ä","ae"],["ö","oe"],["ü","ue"],["ß","ss"],["+"," plus "],["&"," und "]])s=s.split(a).join(b);return s.replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"")};
 (async()=>{
   for(const d of ['p','s','c'])fs.mkdirSync(path.join(OUT,d),{recursive:true});
@@ -27,12 +29,12 @@ const slug=s=>{s=s.toLowerCase();for(const [a,b] of [["ä","ae"],["ö","oe"],["�
     for(let i=0;i<g.n.length;i++){
       const key=g.id+'|'+g.n[i];const base=g.id+'-'+slug(g.n[i]);
       if(g.icon==='phone'&&gl){
-        const r=await pg.evaluate(async([gid,i,FR,SW,SH])=>{const g=TK.GR[gid];
+        const r=await pg.evaluate(async([gid,i,FR,COLS,SW,SH])=>{const g=TK.GR[gid];
           const st=await TK3D.renderStill(g,i,0,{width:640,height:800,dark:false,scale:.8});
-          const sp=document.createElement('canvas');sp.width=SW*FR;sp.height=SH;const x=sp.getContext('2d');
-          await TK3D.turntable(g,i,0,{frames:FR,width:SW,height:SH,dark:false,scale:.8},(c,k)=>{x.drawImage(c,k*SW,0)});
-          return {still:st.toDataURL('image/webp',.86),spin:sp.toDataURL('image/webp',.8)}},[g.id,i,FR,SW,SH]);
-        man.products[key]={img:wr('p/'+base+'.webp',b64(r.still)),spin:wr('p/'+base+'-3d.webp',b64(r.spin)),frames:FR,w:SW,h:SH,kind:'3d'};
+          const sp=document.createElement('canvas');sp.width=SW*COLS;sp.height=SH*Math.ceil(FR/COLS);const x=sp.getContext('2d');
+          await TK3D.turntable(g,i,0,{frames:FR,width:SW,height:SH,dark:false,scale:.8},(c,k)=>{x.drawImage(c,(k%COLS)*SW,Math.floor(k/COLS)*SH)});
+          return {still:st.toDataURL('image/webp',.86),spin:sp.toDataURL('image/webp',.8)}},[g.id,i,FR,COLS,SW,SH]);
+        man.products[key]={img:wr('p/'+base+'.webp',b64(r.still)),spin:wr('p/'+base+'-3d.webp',b64(r.spin)),frames:FR,cols:COLS,w:SW,h:SH,kind:'3d'};
       }else{
         /* SVG-Zeichnung; Verweise auf gemeinsame Verläufe (url(#…)) werden als eigene <defs> mitgenommen */
         const s=await pg.evaluate(([gid,i])=>{let s=__TKX.art(TK.GR[gid],i,400);if(!s.startsWith('<svg'))return s;
